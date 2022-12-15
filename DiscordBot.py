@@ -52,6 +52,12 @@ def main():
 
 	# Comandos
 
+	@bot.command(help='te envia un mensaje al MD')
+	async def respondeme(ctx):
+		print(ctx.author)
+		await ctx.author.send(content='ola amigo como estas :D ')
+
+
 	@bot.command(help='Lista de roles a los que perteneces.')
 	async def rol_list(ctx):
 		roles = ''
@@ -115,8 +121,7 @@ def main():
 			await ctx.send(embed = respuesta.enviar)
 
 	# Eventos
-
-	@bot.event
+	@bot.event ###
 	async def on_message(message):
 		message_content = message.content.lower()
 		message_content = message_content.split(' ')
@@ -129,7 +134,14 @@ def main():
 				break
 		await bot.process_commands(message)
 
-	print('Ejecutando bot')
+	@bot.event #######
+	async def on_ready():
+	    # activity = discord.Streaming(name="Stream", url='https://www.twitch.tv/elmiillor')
+	    activity=discord.Activity(type=discord.ActivityType.listening, name="Conejito malo")
+	    await bot.change_presence(activity=activity)
+	    #await bot.change_presence(status=discord.Status.dnd, activity=activity)
+	    print("Bot is ready!")
+
 	bot.run(token)
 
 
